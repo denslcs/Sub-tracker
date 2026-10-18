@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 import jwt
 import os
 from datetime import datetime, timedelta, timezone
@@ -21,3 +22,13 @@ def create_access_token(user_id: str) -> str:
         key=SECRET_KEY,
         algorithm=ALGORITHM
     )
+
+def decode_access_token(token: str) -> dict:
+    try:
+        return jwt.decode(
+            token,
+            key=SECRET_KEY,
+            algorithms=[ALGORITHM]
+        )
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Недействительный токен")
