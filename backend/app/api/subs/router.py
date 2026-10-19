@@ -7,6 +7,7 @@ from app.api.subs.schemas import SubCreate, SubResponse, SubUpdate
 from app.security.deps import get_current_user
 from app.api.subs.models import SubModel
 from app.api.auth.models import UserModel
+from decimal import Decimal
 
 
 router = APIRouter()
@@ -32,6 +33,15 @@ def Sub_Create(new_sub: SubCreate, db: Session = Depends(get_db), current_user: 
 @router.get("/subsubs", response_model=list[SubResponse], summary="Получить все подписки")
 def Sub_Response_All(db: Session = Depends(get_db), current_user: UserModel = Depends(get_current_user)):
     return db.query(SubModel).filter(SubModel.user_id == current_user.id).all()
+
+@router.get("/subsubs/summ", status_code=200, summary="Общая стоимость активных подписок юзера")
+def Sub_Suma(db: Session = Depends(get_db), current_user: UserModel = Depends(get_current_user)):
+    subs = db.query(SubModel).filter(SubModel.user_id == current_user.id, SubModel.is_active == True).all()
+    total = Decimal("0.00")
+    for sub_price in subs:
+        total += sub_price.price
+        
+    return {"total": total}
 
 # Получение подписки
 @router.get("/subsubs/{subscription_id}", response_model=SubResponse, summary="Получить конкретную подписку по ID")
@@ -85,3 +95,5 @@ def Sub_Delete(subscription_id: int, db: Session = Depends(get_db), current_user
     db.commit()
 
     return {"message": f"Подписка {sub.name} успешно удалена"}
+
+
