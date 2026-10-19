@@ -15,18 +15,30 @@ Pydantic
 
 ## Структура проекта
 
-app/main.py - создание FastAPI-приложения и подключение маршрутизаторов.
-
-app/config.py - общие настройки приложения.
-
-app/database.py - настройка подключения к базе данных.
-
-app/api/auth/ - авторизация и регистрация пользователей.
-
-app/api/subs/ - управление подписками, модели, схемы и бизнес-логика.
-
-app/security/ - работа с JWT и хешированием паролей.
-
-app/errors.py - ошибки/статус код.
-
-requirements.txt - зависимости проекта.
+Sub-tracker/
+└── backend/
+    ├── .venv/
+    ├── app/
+    │   ├── main.py
+    │   ├── config.py
+    │   ├── database.py
+    │   ├── security
+    │           ├── deps.py
+    │           ├── jwt.py
+    │           └── passwords.py
+    │   └── api/
+    │       ├── auth/
+    │           ├── models.py
+    │           ├── router.py
+    │           └── schemas.py
+    │       └── subs/
+    │           ├── models.py
+    │           ├── router.py
+    │           ├── schemas.py
+    │           └── service.py
+    │
+    ├── tests/                      
+    │   └── test_subscription_dates.py  
+    │
+    ├── requirements.txt
+    └── sub.db
