@@ -15,30 +15,39 @@ Pydantic
 
 ## Структура проекта
 
+## Структура проекта
+
+```text
 Sub-tracker/
-└── backend/
-    ├── .venv/
-    ├── app/
-    │   ├── main.py
-    │   ├── config.py
-    │   ├── database.py
-    │   ├── security
-    │           ├── deps.py
-    │           ├── jwt.py
-    │           └── passwords.py
-    │   └── api/
-    │       ├── auth/
-    │           ├── models.py
-    │           ├── router.py
-    │           └── schemas.py
-    │       └── subs/
-    │           ├── models.py
-    │           ├── router.py
-    │           ├── schemas.py
-    │           └── service.py
-    │
-    ├── tests/                      
-    │   └── test_subscription_dates.py  
-    │
-    ├── requirements.txt
-    └── sub.db
+│
+├── backend/
+│   ├── app/
+│   │   ├── main.py                # точка входа FastAPI
+│   │   ├── config.py              # настройки приложения
+│   │   ├── database.py            # engine, SessionLocal, Base, get_db
+│   │   │
+│   │   ├── security/
+│   │   │   ├── deps.py            # получение текущего пользователя
+│   │   │   ├── jwt.py             # создание и декодирование JWT
+│   │   │   └── passwords.py       # хеширование и проверка паролей
+│   │   │
+│   │   └── api/
+│   │       ├── auth/
+│   │       │   ├── models.py      # модель пользователя
+│   │       │   ├── router.py      # эндпоинты регистрации, логина, профиля
+│   │       │   └── schemas.py     # схемы Pydantic для auth
+│   │       │
+│   │       └── subs/
+│   │           ├── models.py      # модель подписки
+│   │           ├── router.py      # CRUD-эндпоинты подписок
+│   │           ├── schemas.py     # схемы Pydantic для подписок
+│   │           └── service.py     # бизнес-логика работы с датами подписок
+│   │
+│   ├── tests/
+│   │   └── test_subscription_dates.py   # тесты логики дат подписок
+│   │
+│   ├── requirements.txt
+│   └── sub.db
+│
+└── README.md
+```
